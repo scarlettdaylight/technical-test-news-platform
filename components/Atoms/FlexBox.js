@@ -43,7 +43,7 @@ const StyledFlex = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   ${props => props.cursorPointer
     && css`
       cursor: pointer;

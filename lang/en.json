@@ -1,1 +1,6 @@
-{}
+{
+  "navbar.search.placeholder": "Search",
+  "navbar.logo": "US News",
+  "newslist.searchingFor.word": "Searching For: <s>{searchWord}</s>",
+  "newslist.searchingFor.result": "Number of Result: <s>{number}<s/>"
+}

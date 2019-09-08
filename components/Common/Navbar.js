@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FormattedMessage } from 'react-intl';
-import throttle from 'lodash/throttle';
+import { FormattedMessage, useIntl, defineMessages } from 'react-intl';
+import debounce from 'lodash/debounce';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
@@ -26,14 +26,22 @@ const SearchInput = styled.input`
   }
 `;
 
+const messages = defineMessages({
+  inputPlaceholder: {
+    id: 'navbar.search.placeholder',
+    defaultMessage: 'Search',
+  },
+});
+
 const Navbar = () => {
   const newsStore = useNewsStore();
+  const intl = useIntl();
 
   const handleOnChange = (value) => {
     newsStore.changeSearch(value);
   };
 
-  const throttleOnChange = throttle((value) => handleOnChange(value), 500);
+  const debounceOnChange = debounce((value) => handleOnChange(value), 500);
 
   return (
     <StyledNavbar className="navbar is-fixed-top" role="navigation" aria-label="main navigation">
@@ -48,10 +56,10 @@ const Navbar = () => {
         <div className="field">
           <p className="control has-icons-left">
             <SearchInput
-              onChange={({ target: { value } }) => throttleOnChange(value)}
+              onChange={({ target: { value } }) => debounceOnChange(value)}
               className="input"
               type="text"
-              placeholder="Search"
+              placeholder={intl.formatMessage(messages.inputPlaceholder)}
             />
             <span className="icon is-small is-left">
               <FontAwesomeIcon icon={faSearch} />

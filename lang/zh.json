@@ -1,1 +1,6 @@
-{}
+{
+  "navbar.search.placeholder": "搜尋",
+  "navbar.logo": "美國新聞",
+  "newslist.searchingFor.word": "正在搜尋: <s>{searchWord}</s>",
+  "newslist.searchingFor.result": "結果數量: <s>{number}<s/>"
+}

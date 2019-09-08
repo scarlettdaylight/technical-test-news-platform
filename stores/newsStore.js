@@ -24,6 +24,9 @@ export function createNewsStore() {
       }
       this.search = word;
     },
+    get isSearchNotEmpty() {
+      return typeof this.search === 'string' && this.search.length > 0;
+    },
     async initData() {
       this.isFetching = true;
       this.newsList = await getNewsAtPage({ page: 1, NumOfItem: INITIAL_NUMBER_OF_DATA });
@@ -36,7 +39,7 @@ export function createNewsStore() {
       }
 
       this.isFetching = true;
-      const newItems = await getNewsAtPage({ page: this.nextPage, NumOfItem: INITIAL_NUMBER_OF_DATA });
+      const newItems = await getNewsAtPage({ page: this.nextPage, NumOfItem: DEFAULT_ITEM_PER_PAGE });
       this.newsList = [...this.newsList, ...newItems];
       this.nextPage = this.nextPage + 1;
       this.isFetching = false;
