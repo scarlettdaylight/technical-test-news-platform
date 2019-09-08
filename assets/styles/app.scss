@@ -40,10 +40,13 @@ $column-gap: 16px;
 @import '../../node_modules/bulma/sass/layout/section';
 @import '../../node_modules/bulma/sass/layout/footer';
 
-
 html {
   overflow-x: hidden;
   overflow-y: auto;
+}
+
+#__main {
+  margin-top: 48px;
 }
 
 .navbar {

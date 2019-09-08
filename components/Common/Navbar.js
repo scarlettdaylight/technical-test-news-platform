@@ -25,7 +25,7 @@ const SearchInput = styled.input`
 `;
 
 const Navbar = () => (
-  <StyledNavbar className="navbar" role="navigation" aria-label="main navigation">
+  <StyledNavbar className="navbar is-fixed-top" role="navigation" aria-label="main navigation">
     <div className="navbar-brand">
       <a className="navbar-item" href="/">
         <Paragraph pb={0} color={theme.color.white}>
