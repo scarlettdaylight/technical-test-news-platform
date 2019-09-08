@@ -43,7 +43,7 @@ export const getNewsAtPage = async ({ page, NumOfItem = DEFAULT_ITEM_PER_PAGE })
 
     return get(response, 'data.articles', []).map(transformNewsItem);
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return [];
   }
 };

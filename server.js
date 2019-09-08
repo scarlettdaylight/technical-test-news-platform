@@ -6,7 +6,7 @@ Intl.NumberFormat = IntlPolyfill.NumberFormat;
 Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat;
 
 const { readFileSync } = require('fs');
-const { basename } = require('path');
+const { basename, join } = require('path');
 const express = require('express');
 const accepts = require('accepts');
 const glob = require('glob');
@@ -17,7 +17,7 @@ const { API_ENDPOINT_NEWS } = require('./utilis/constants');
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
-const app = next({ dev });
+const app = next({ dir: '.', dev });
 const handle = app.getRequestHandler();
 
 // -------------------------- react-intl --------------------------
@@ -51,6 +51,12 @@ const getMessages = (locale) => require(`./lang/${locale}.json`);
 
 app.prepare().then(() => {
   const server = express();
+
+  // serve service worker as static
+  server.get('/service-worker.js', (req, res) => {
+    const filePath = join(__dirname, '.next/static/', 'service-worker.js');
+    app.serveStatic(req, res, filePath);
+  });
 
   server.use((req, res, next) => {
     const accept = accepts(req);

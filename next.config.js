@@ -6,7 +6,6 @@ const withOffline = require('next-offline');
 const Dotenv = require('dotenv-webpack');
 
 const nextConfig = {
-  ...withOffline(),
   serverRuntimeConfig: {
     // Will only be available on the server side
     apiKey: process.env.APIKEY, // Pass through env variables
@@ -24,6 +23,26 @@ const nextConfig = {
     ];
     return config;
   },
+  workboxOpts: {
+    swDest: 'static/service-worker.js',
+    runtimeCaching: [
+      {
+        urlPattern: /^https?.*/,
+        handler: 'NetworkFirst',
+        options: {
+          cacheName: 'https-calls',
+          networkTimeoutSeconds: 15,
+          expiration: {
+            maxEntries: 150,
+            maxAgeSeconds: 30 * 24 * 60 * 60, // 1 month
+          },
+          cacheableResponse: {
+            statuses: [0, 200],
+          },
+        },
+      },
+    ],
+  },
 };
 
-module.exports = withOffline(withSass(nextConfig));
+module.exports = withSass(withOffline(nextConfig));
