@@ -7,8 +7,15 @@ const Dotenv = require('dotenv-webpack');
 
 const nextConfig = {
   serverRuntimeConfig: {
-    // Will only be available on the server side
     apiKey: process.env.APIKEY, // Pass through env variables
+  },
+  publicRuntimeConfig: {
+    meta: {
+      title: 'US News',
+      desc: 'A place to show all US news!',
+      url: 'https://example.com', // to be updated
+      image: '/static/apple-touch-icon-1024x1024.png', // to be updated
+    },
   },
   webpack: (config) => {
     config.plugins = config.plugins || [];

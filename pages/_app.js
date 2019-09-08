@@ -4,9 +4,12 @@ import React from 'react';
 import App from 'next/app';
 import { ThemeProvider } from 'styled-components';
 import { IntlProvider } from 'react-intl';
-
+import Helmet from 'react-helmet';
+import getConfig from 'next/config';
 import theme from '../assets/styles/theme';
 import Navbar from '../components/Common/Navbar';
+
+const { publicRuntimeConfig } = getConfig();
 
 class MyApp extends App {
   static async getInitialProps({ Component, router, ctx }) {
@@ -26,14 +29,52 @@ class MyApp extends App {
 
 
   render() {
-    const { Component, pageProps, locale, messages } = this.props;
+    const {
+      Component, pageProps, locale, messages,
+    } = this.props;
+    const { meta } = publicRuntimeConfig;
+
     return (
-      <ThemeProvider theme={theme}>
-        <IntlProvider locale={locale} messages={messages}>
-          <Navbar />
-          <Component {...pageProps} />
-        </IntlProvider>
-      </ThemeProvider>
+      <>
+        <Helmet
+          titleTemplate={`%s | ${publicRuntimeConfig.meta.title}`}
+          defaultTitle={publicRuntimeConfig.meta.title}
+        >
+          <meta charSet="utf-8" />
+          <meta name="viewport" content="width=device-width" />
+          <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+          <meta property="og:site_name" content={publicRuntimeConfig.meta.title} />
+          <meta property="og:type" content="website" />
+          {/* link */}
+          <link rel="canonical" href={publicRuntimeConfig.meta.url} />
+          <meta property="og:url" content={publicRuntimeConfig.meta.url} />
+          <meta name="twitter:url" content={publicRuntimeConfig.meta.url} />
+          {/* desc */}
+          <meta name="description" content={publicRuntimeConfig.meta.desc} />
+          <meta property="og:description" content={publicRuntimeConfig.meta.desc} />
+          <meta name="twitter:description" content={publicRuntimeConfig.meta.desc} />
+          {/* images */}
+          <meta property="og:image" content={publicRuntimeConfig.image} />
+          <meta name="twitter:image" content={publicRuntimeConfig.image} />
+          {/* icons */}
+          <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
+          <meta name="apple-mobile-web-app-capable" content="yes" />
+          <link rel="apple-touch-icon" href="/static/apple-touch-icon-180x180.png" />
+          <link rel="apple-touch-icon" sizes="76x76" href="/static/apple-touch-icon-76x76.png" />
+          <link rel="apple-touch-icon" sizes="152x152" href="/static/apple-touch-icon-152x152.png" />
+          {/* others */}
+          <link rel="manifest" href="/static/manifest.json" />
+          <meta name="theme-color" content="#3c3b63" />
+        </Helmet>
+        <ThemeProvider theme={theme}>
+          <IntlProvider locale={locale} messages={messages}>
+            <Navbar />
+            <div id="__main">
+              <Component {...pageProps} />
+            </div>
+          </IntlProvider>
+        </ThemeProvider>
+      </>
     );
   }
 }

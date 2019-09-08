@@ -1,0 +1,20 @@
+{
+  "short_name": "US News",
+  "name": "US News",
+  "icons": [
+    {
+      "src": "/static/apple-touch-icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/static/apple-touch-icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/?source=pwa",
+  "background_color": "#bdbdbd",
+  "display": "standalone",
+  "theme_color": "#3c3b63"
+}
