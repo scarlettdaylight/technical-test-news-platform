@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
 import { useStaticRendering, useLocalStore } from 'mobx-react-lite';
 import { getNewsAtPage } from '../utilis/newsSource';
 import {
@@ -15,14 +15,37 @@ export function createNewsStore() {
   return {
     nextPage: 0,
     newsList: [],
+    search: '',
+    isFetching: false,
+    changeSearch(word) {
+      if (typeof word !== 'string' || this.search === word) {
+        return;
+      }
+      this.search = word;
+    },
     async initData() {
+      this.isFetching = true;
       this.newsList = await getNewsAtPage({ page: 1, NumOfItem: INITIAL_NUMBER_OF_DATA });
       this.nextPage = INITIAL_NUMBER_OF_DATA / DEFAULT_ITEM_PER_PAGE;
+      this.isFetching = false;
     },
     async addNextPageNews() {
+      if (this.isFetching) {
+        return;
+      }
+
+      this.isFetching = true;
       const newItems = await getNewsAtPage({ pageNum: this.nextPage });
       this.newsList = [...this.newsList, ...newItems];
       this.nextPage++;
+      this.isFetching = false;
+    },
+    get currentNewsList() {
+      if (this.search === '') {
+        return this.newsList;
+      }
+
+      return this.newsList.filter((news) => news.desc.includes(this.search) || news.title.includes(this.search));
     },
   };
 }

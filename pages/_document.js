@@ -17,7 +17,7 @@ export default class MyDocument extends Document {
       return {
         ...initialProps,
         helmet: Helmet.renderStatic(),
-        styles: (
+        styleTags: (
           <>
             {initialProps.styles}
             {sheet.getStyleElement()}
@@ -31,7 +31,7 @@ export default class MyDocument extends Document {
 
 
   render() {
-    const { helmet } = this.props;
+    const { helmet, styleTags } = this.props;
     const htmlAttrs = helmet.htmlAttributes.toComponent();
     const bodyAttrs = helmet.bodyAttributes.toComponent();
     const headAttrs = Object.keys(helmet).filter((el) => el !== 'htmlAttributes' && el !== 'bodyAttributes').map((el) => helmet[el].toComponent());
@@ -40,6 +40,7 @@ export default class MyDocument extends Document {
       <html {...htmlAttrs}>
         <Head>
           {headAttrs}
+          {styleTags}
         </Head>
         <body {...bodyAttrs}>
           <Main />

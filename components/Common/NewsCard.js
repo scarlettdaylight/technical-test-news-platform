@@ -2,11 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import LazyLoad from 'react-lazyload';
 
-import Box from './Atoms/Box';
-import Paragraph from './Atoms/Paragraph';
-import Image from './Atoms/Image';
-import theme from '../assets/styles/theme';
-
+import Box from '../Atoms/Box';
+import Paragraph from '../Atoms/Paragraph';
+import Image from '../Atoms/Image';
+import theme from '../../assets/styles/theme';
 
 const StyledCardBox = styled(Box)`
   box-shadow: 0px 3px 6px ${({ theme }) => theme.color.black20};
@@ -44,7 +43,7 @@ const NewsCard = ({
   url = '',
   coverImage = '/static/image/default.png',
 }) => (
-  <LazyLoad>
+  <LazyLoad scrollContainer="#news-list-wrapper" once>
     <a href={url} target="_blank" rel="noreferrer noopener">
       <StyledCardBox className="card">
         <Box className="media" p={3} mb="0 !important">
