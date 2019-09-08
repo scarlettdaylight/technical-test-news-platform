@@ -5,10 +5,9 @@ import {
 } from 'styled-system';
 
 const StyledParagraph = styled.p`
-  font-family: 'Karla', sans-serif;
   margin: 0;
   font-weight: 400;
-  line-height: 1.6;
+  line-height: 1.45;
   letter-spacing: normal;
   text-align: inherit;
 
@@ -26,7 +25,7 @@ const StyledParagraph = styled.p`
 `;
 
 const Paragraph = ({ children, ...props }) => (
-  <StyledParagraph fontSize={[0, 0, 1]} pb={[2, 2, 3]} {...props}>
+  <StyledParagraph fontSize={[2, 2, 3]} pb={[2, 2, 3]} {...props}>
     {children}
   </StyledParagraph>
 );

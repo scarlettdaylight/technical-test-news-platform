@@ -7,16 +7,20 @@ Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat;
 
 const { readFileSync } = require('fs');
 const { basename } = require('path');
-const { createServer } = require('http');
+const express = require('express');
 const accepts = require('accepts');
 const glob = require('glob');
 const next = require('next');
+
+const { getEveryNewsFromApi } = require('./server/newsApi');
+const { API_ENDPOINT_NEWS } = require('./utilis/constants');
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
+// -------------------------- react-intl --------------------------
 // Get the supported languages by looking for translations in the `lang/` dir.
 const supportedLanguages = glob
   .sync('./lang/*.json')
@@ -42,15 +46,26 @@ const getLocaleDataScript = (locale) => {
 // each message description in the source code will be used.
 const getMessages = (locale) => require(`./lang/${locale}.json`);
 
+
+// -------------------------- express --------------------------
+
 app.prepare().then(() => {
-  createServer((req, res) => {
+  const server = express();
+
+  server.use((req, res, next) => {
     const accept = accepts(req);
     const locale = accept.language(accept.languages(supportedLanguages)) || 'en';
     req.locale = locale;
     req.localeDataScript = getLocaleDataScript(locale);
     req.messages = dev ? {} : getMessages(locale);
-    handle(req, res);
-  }).listen(port, (err) => {
+    next();
+  });
+
+  server.get(API_ENDPOINT_NEWS, getEveryNewsFromApi);
+
+  server.get('*', (req, res) => handle(req, res));
+
+  server.listen(port, (err) => {
     if (err) throw err;
     console.log(`> Ready on http://localhost:${port}`);
   });

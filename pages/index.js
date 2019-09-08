@@ -1,9 +1,12 @@
 import React from 'react';
 import SectionNewsList from '../components/Home/SectionNewsList';
+import { NewsStoreProvider } from '../stores/newsStore';
 
 function Home() {
   return (
-    <SectionNewsList />
+    <NewsStoreProvider>
+      <SectionNewsList />
+    </NewsStoreProvider>
   );
 }
 

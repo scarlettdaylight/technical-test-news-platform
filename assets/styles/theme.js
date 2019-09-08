@@ -1,7 +1,7 @@
 const theme = {
   space: [0, 4, 8, 16, 24, 32, 40, 64, 128, 256, 512],
   breakpoints: ['576px', '768px', '992px', '1200px'],
-  fontSizes: [16, 18, 32, 40],
+  fontSizes: [12, 14, 16, 18, 32, 40],
   color: {
     purple: '#3c3b63',
     lighterGray: '#bdbdbd',

@@ -1,44 +1,75 @@
 import React from 'react';
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 import Box from './Atoms/Box';
-import FlexBox from './Atoms/FlexBox';
 import Paragraph from './Atoms/Paragraph';
 import Image from './Atoms/Image';
-import Heading from './Atoms/Heading';
+import theme from '../assets/styles/theme';
+
 
 const StyledCardBox = styled(Box)`
   box-shadow: 0px 3px 6px ${({ theme }) => theme.color.black20};
-`
+  height: 100%;
+`;
+
+const StyledCardTitle = styled.h3`
+  line-height: 1.4;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: ${({ theme }) => theme.color.black87};
+`;
+
+const StyledMediaCircle = styled.div`
+  width: 48px;
+  height: 48px;
+  font-size: 24px;
+  text-align: center;
+  line-height: 48px;
+  color: ${({ theme }) => theme.color.gray};
+  background-color: ${({ theme }) => theme.color.lighterGray};
+  border-radius: 2048px;
+`;
 
 const NewsCard = ({
-  company = '', date = '', title = '', desc = '', image = '',
+  sourceName = '', publishedAt = '', title = '', desc = '', coverImage = '/static/image/default.png',
 }) => (
-  <StyledCardBox>
-    <FlexBox>
-      <Box>
-        <span>{company[0]}</span>
-      </Box>
-      <Box>
-        <Paragraph>
-          {company}
+  <StyledCardBox className="card">
+    <Box className="media" p={3} mb="0 !important">
+      <div className="media-left">
+        <StyledMediaCircle>
+          {sourceName[0]}
+        </StyledMediaCircle>
+      </div>
+      <div className="media-content">
+        <Paragraph
+          pb={0}
+          color={theme.color.black87}
+          className="title is-4"
+        >
+          {sourceName}
         </Paragraph>
-        <Paragraph>
-          {date}
+        <Paragraph
+          pb={0}
+          color={theme.color.black54}
+          fontSize={[1, 1, 2]}
+          className="subtitle is-6"
+        >
+          {publishedAt}
         </Paragraph>
-      </Box>
-    </FlexBox>
-    <FlexBox>
-      <Image src={image} />
-    </FlexBox>
-    <FlexBox>
-      <Heading h={2}>
+      </div>
+    </Box>
+    <Box className="card-image" height={[250, 250, 300]} backgroundColor={theme.color.lighterGray}>
+      <Image src={coverImage} alt={title} />
+    </Box>
+    <Box className="card-content" p={3}>
+      <StyledCardTitle>
         {title}
-      </Heading>
-      <Paragraph>
+      </StyledCardTitle>
+      <Paragraph fontSize={2} color={theme.color.black54}>
         {desc}
       </Paragraph>
-    </FlexBox>
+    </Box>
   </StyledCardBox>
 );
 
