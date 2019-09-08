@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect } from 'react';
-import { useStaticRendering, useLocalStore } from 'mobx-react-lite';
+import lowerCase from 'lodash/lowerCase';
+import { useStaticRendering, useLocalStore, useAsObservableSource } from 'mobx-react-lite';
 import { getNewsAtPage } from '../utilis/newsSource';
 import {
   DEFAULT_ITEM_PER_PAGE,
@@ -26,7 +27,7 @@ export function createNewsStore() {
     async initData() {
       this.isFetching = true;
       this.newsList = await getNewsAtPage({ page: 1, NumOfItem: INITIAL_NUMBER_OF_DATA });
-      this.nextPage = INITIAL_NUMBER_OF_DATA / DEFAULT_ITEM_PER_PAGE;
+      this.nextPage = INITIAL_NUMBER_OF_DATA / DEFAULT_ITEM_PER_PAGE + 1;
       this.isFetching = false;
     },
     async addNextPageNews() {
@@ -35,40 +36,61 @@ export function createNewsStore() {
       }
 
       this.isFetching = true;
-      const newItems = await getNewsAtPage({ pageNum: this.nextPage });
+      const newItems = await getNewsAtPage({ page: this.nextPage, NumOfItem: INITIAL_NUMBER_OF_DATA });
       this.newsList = [...this.newsList, ...newItems];
-      this.nextPage++;
+      this.nextPage = this.nextPage + 1;
       this.isFetching = false;
     },
     get currentNewsList() {
       if (this.search === '') {
         return this.newsList;
       }
+      const lowerSearch = lowerCase(this.search);
 
-      return this.newsList.filter((news) => news.desc.includes(this.search) || news.title.includes(this.search));
+      return this.newsList.filter((news) => lowerCase(news.desc).includes(lowerSearch) || lowerCase(news.title).includes(lowerSearch));
     },
   };
 }
 
-export const NewsStoreProvider = ({ children }) => {
-  const newsStore = useLocalStore(createNewsStore);
+// to test multiple store
+export function createUIStore() {
+  return {
+    isMenuOpened: false,
+  };
+}
 
-  if (newsStore.nextPage === 0) {
-    newsStore.initData();
+
+export const NewsStoreProvider = ({ children }) => {
+  const store = useLocalStore(() => ({
+    newsStore: createNewsStore(),
+    uiStore: createUIStore(),
+  }));
+
+  if (store.newsStore.nextPage === 0) {
+    store.newsStore.initData();
   }
 
   return (
-    <NewsStoreContext.Provider value={newsStore}>
+    <NewsStoreContext.Provider value={store}>
       {children}
     </NewsStoreContext.Provider>
   );
 };
 
-export const useNewsStore = () => {
-  const newsStore = useContext(NewsStoreContext);
-  if (!newsStore) {
+export const useRootStore = () => {
+  const store = useContext(NewsStoreContext);
+  if (!store) {
     // this is especially useful in TypeScript so you don't need to be checking for null all the time
     throw new Error('You have forgot to use StoreProvider, shame on you.');
   }
-  return newsStore;
+  return store;
+};
+
+export const useNewsStore = () => {
+  const store = useContext(NewsStoreContext);
+  if (!store) {
+    // this is especially useful in TypeScript so you don't need to be checking for null all the time
+    throw new Error('You have forgot to use StoreProvider, shame on you.');
+  }
+  return store.newsStore;
 };

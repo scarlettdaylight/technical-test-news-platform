@@ -5,9 +5,7 @@ import Box from '../components/Atoms/Box';
 
 function Home() {
   return (
-    <NewsStoreProvider>
-      <SectionNewsList />
-    </NewsStoreProvider>
+    <SectionNewsList />
   );
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { observer } from 'mobx-react-lite';
+import { observer, useAsObservableSource } from 'mobx-react-lite';
 import styled from 'styled-components';
 import throttle from 'lodash/throttle';
 
@@ -21,24 +21,21 @@ const InfiniteSectionWrapper = styled(Section)`
 const SectionNewsList = observer(() => {
   const newsStore = useNewsStore();
 
-  // TODO maybe throttle this?
-  const handleScroll = (e) => {
-    const element = e.target;
-    const offset = 600;
-
-    console.log('scrolled!!');
-    console.log(`element.scrollHeight: ${element.scrollHeight}`);
-    console.log(`element.scrollTop: ${element.scrollTop}`);
-    console.log(`element.clientHeight: ${element.clientHeight}`);
-
-    if (element.scrollHeight - (element.scrollTop + element.clientHeight) <= offset) {
+  const handleScroll = (target) => {
+    const offset = 1000;
+    if (target.scrollHeight - (target.scrollTop + target.clientHeight) <= offset) {
       // do something at end of scroll
       newsStore.addNextPageNews();
     }
   };
 
+  const throttleOnScroll = throttle((target) => handleScroll(target), 300);
+
   return (
-    <InfiniteSectionWrapper id="news-list-wrapper" onScroll={handleScroll}>
+    <InfiniteSectionWrapper
+      id="news-list-wrapper"
+      onScroll={({ target }) => throttleOnScroll(target)}
+    >
       <Container fluid>
         <Row multi>
           {newsStore.currentNewsList.map((item, i) => (

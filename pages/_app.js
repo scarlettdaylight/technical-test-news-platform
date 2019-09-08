@@ -8,6 +8,7 @@ import Helmet from 'react-helmet';
 import getConfig from 'next/config';
 import theme from '../assets/styles/theme';
 import Navbar from '../components/Common/Navbar';
+import { NewsStoreProvider } from '../stores/newsStore';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -68,10 +69,12 @@ class MyApp extends App {
         </Helmet>
         <ThemeProvider theme={theme}>
           <IntlProvider locale={locale} messages={messages}>
-            <Navbar />
-            <div id="__main">
-              <Component {...pageProps} />
-            </div>
+            <NewsStoreProvider>
+              <Navbar />
+              <div id="__main">
+                <Component {...pageProps} />
+              </div>
+            </NewsStoreProvider>
           </IntlProvider>
         </ThemeProvider>
       </>

@@ -43,47 +43,47 @@ const NewsCard = ({
   url = '',
   coverImage = '/static/image/default.png',
 }) => (
-  <LazyLoad scrollContainer="#news-list-wrapper" once>
-    <a href={url} target="_blank" rel="noreferrer noopener">
-      <StyledCardBox className="card">
-        <Box className="media" p={3} mb="0 !important">
-          <div className="media-left">
-            <StyledMediaCircle>
-              {sourceName[0]}
-            </StyledMediaCircle>
-          </div>
-          <div className="media-content">
-            <Paragraph
-              pb={0}
-              color={theme.color.black87}
-              className="title is-4"
-            >
-              {sourceName}
-            </Paragraph>
-            <Paragraph
-              pb={0}
-              color={theme.color.black54}
-              fontSize={[1, 1, 2]}
-              className="subtitle is-6"
-            >
-              {publishedAt}
-            </Paragraph>
-          </div>
-        </Box>
-        <Box className="card-image" height={[250, 250, 300]} backgroundColor={theme.color.lighterGray}>
-          <Image src={coverImage} alt={title} />
-        </Box>
-        <Box className="card-content" p={3}>
-          <StyledCardTitle>
-            {title}
-          </StyledCardTitle>
-          <Paragraph fontSize={2} color={theme.color.black54}>
-            {desc}
+  <a href={url} target="_blank" rel="noreferrer noopener">
+    <StyledCardBox className="card">
+      <Box className="media" p={3} mb="0 !important">
+        <div className="media-left">
+          <StyledMediaCircle>
+            {sourceName[0]}
+          </StyledMediaCircle>
+        </div>
+        <div className="media-content">
+          <Paragraph
+            pb={0}
+            color={theme.color.black87}
+            className="title is-4"
+          >
+            {sourceName}
           </Paragraph>
-        </Box>
-      </StyledCardBox>
-    </a>
-  </LazyLoad>
+          <Paragraph
+            pb={0}
+            color={theme.color.black54}
+            fontSize={[1, 1, 2]}
+            className="subtitle is-6"
+          >
+            {publishedAt}
+          </Paragraph>
+        </div>
+      </Box>
+      <Box className="card-image" height={[250, 250, 300]} backgroundColor={theme.color.lighterGray}>
+        <LazyLoad scrollContainer="#news-list-wrapper" once>
+          <Image src={coverImage} alt={title} />
+        </LazyLoad>
+      </Box>
+      <Box className="card-content" p={3}>
+        <StyledCardTitle>
+          {title}
+        </StyledCardTitle>
+        <Paragraph fontSize={2} color={theme.color.black54}>
+          {desc}
+        </Paragraph>
+      </Box>
+    </StyledCardBox>
+  </a>
 );
 
 export default NewsCard;
