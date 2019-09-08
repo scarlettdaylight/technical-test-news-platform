@@ -1,10 +1,16 @@
 # News Platform :stars: 
 
 <p>A place to display US news!</p> 
-<p>See live demo here:</p>
 
 ## Features :star: 
-- [x] Display 100 news articles from Washington Post and New York Times. 
+- [x] Display 100 news articles from Washington Post and New York Times. :newspaper:
+- [x] Infinite scroll to fetch 10 more news everytime. :cyclone: 
+- [x] Search through fetched news.
+- [ ] Show loading icons.
+- [x] Service Workers included :construction_worker: 
+- [x] Basic API include to protect API key. :key:  
+- [x] i18n included. :dancers:   
+
 
 ## How to use
 
