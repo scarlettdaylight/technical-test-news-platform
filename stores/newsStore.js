@@ -1,10 +1,10 @@
 import React, { createContext, useContext, useEffect } from 'react';
 import lowerCase from 'lodash/lowerCase';
 import { useStaticRendering, useLocalStore, useAsObservableSource } from 'mobx-react-lite';
-import { getNewsAtPage } from '../utilis/newsSource';
+import { getNews } from '../utilis/newsSource';
 import {
   DEFAULT_ITEM_PER_PAGE,
-  INITIAL_NUMBER_OF_DATA,
+  INITIAL_NUMBER_OF_DATA, NEWS_TYPES_ALL,
 } from '../utilis/constants';
 
 const isServer = typeof window === 'undefined';
@@ -17,7 +17,12 @@ export function createNewsStore() {
     nextPage: 0,
     newsList: [],
     search: '',
+    type: NEWS_TYPES_ALL,
     isFetching: false,
+    changeType(type) {
+      this.type = type;
+      this.initData();
+    },
     changeSearch(word) {
       if (typeof word !== 'string' || this.search === word) {
         return;
@@ -28,8 +33,13 @@ export function createNewsStore() {
       return typeof this.search === 'string' && this.search.length > 0;
     },
     async initData() {
+      this.newsList = [];
       this.isFetching = true;
-      this.newsList = await getNewsAtPage({ page: 1, NumOfItem: INITIAL_NUMBER_OF_DATA });
+      this.newsList = await getNews({
+        type: this.type,
+        page: 1,
+        NumOfItem: INITIAL_NUMBER_OF_DATA,
+      });
       this.nextPage = INITIAL_NUMBER_OF_DATA / DEFAULT_ITEM_PER_PAGE + 1;
       this.isFetching = false;
     },
@@ -39,7 +49,11 @@ export function createNewsStore() {
       }
 
       this.isFetching = true;
-      const newItems = await getNewsAtPage({ page: this.nextPage, NumOfItem: DEFAULT_ITEM_PER_PAGE });
+      const newItems = await getNews({
+        type: this.type,
+        page: this.nextPage,
+        NumOfItem: DEFAULT_ITEM_PER_PAGE,
+      });
       this.newsList = [...this.newsList, ...newItems];
       this.nextPage = this.nextPage + 1;
       this.isFetching = false;

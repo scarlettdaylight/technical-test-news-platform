@@ -1,6 +1,10 @@
 import axios from 'axios';
 import get from 'lodash/get';
-import { DEFAULT_ITEM_PER_PAGE, API_ENDPOINT_NEWS } from './constants';
+import {
+  DEFAULT_ITEM_PER_PAGE,
+  API_ENDPOINT_NEWS, API_ENDPOINT_HEADLINES,
+  NEWS_TYPES_ALL, NEWS_TYPES_HEADLINES,
+} from './constants';
 
 export const dummayNewsItem = {
   author: 'The Washington Post',
@@ -27,9 +31,14 @@ const api = axios.create({
   timeout: 10000,
 });
 
-export const getNewsAtPage = async ({ page, NumOfItem = DEFAULT_ITEM_PER_PAGE }) => {
+export const getNews = async ({
+  type = NEWS_TYPES_ALL,
+  page,
+  NumOfItem = DEFAULT_ITEM_PER_PAGE,
+}) => {
   try {
-    const response = await api.get(API_ENDPOINT_NEWS, {
+    const ep = type === NEWS_TYPES_HEADLINES ? API_ENDPOINT_HEADLINES : API_ENDPOINT_NEWS;
+    const response = await api.get(ep, {
       params: {
         page,
         pageSize: NumOfItem,

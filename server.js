@@ -12,8 +12,8 @@ const accepts = require('accepts');
 const glob = require('glob');
 const next = require('next');
 
-const { getEveryNewsFromApi } = require('./server/newsApi');
-const { API_ENDPOINT_NEWS } = require('./utilis/constants');
+const { getEveryNewsFromApi, getHeadlineFromApi } = require('./server/newsApi');
+const { API_ENDPOINT_NEWS, API_ENDPOINT_HEADLINES } = require('./utilis/constants');
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
@@ -68,6 +68,8 @@ app.prepare().then(() => {
   });
 
   server.get(API_ENDPOINT_NEWS, getEveryNewsFromApi);
+
+  server.get(API_ENDPOINT_HEADLINES, getHeadlineFromApi);
 
   server.get('*', (req, res) => handle(req, res));
 

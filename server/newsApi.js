@@ -10,8 +10,27 @@ const newsapi = axios.create({
 });
 
 const getEveryNewsFromApi = (req, res) => {
-
   newsapi.get('everything', {
+    headers: {
+      'x-api-key': process.env.APIKEY,
+    },
+    params: {
+      pageSize: get(req, 'query.pageSize', 10),
+      page: get(req, 'query.page', 1),
+      sources: DEFAULT_SOURCE_LIST.join(),
+    },
+  })
+    .then((response) => {
+      res.status(200).send(response.data);
+    })
+    .catch((err) => {
+      // TODO: update error message
+      res.status(402).send(err.message);
+    });
+};
+
+const getHeadlineFromApi = (req, res) => {
+  newsapi.get('top-headlines', {
     headers: {
       'x-api-key': process.env.APIKEY,
     },
@@ -32,4 +51,5 @@ const getEveryNewsFromApi = (req, res) => {
 
 module.exports = {
   getEveryNewsFromApi,
+  getHeadlineFromApi
 };
