@@ -25,6 +25,8 @@ $widescreen: 1200px;
 
 $column-gap: 16px;
 
+$input-arrow: $purple;
+
 
 // Import only what you need from Bulma
 @import '../../node_modules/bulma/sass/utilities/_all';
@@ -51,4 +53,8 @@ html {
 
 .media {
   align-items: center;
+}
+
+@keyframes spin {
+
 }

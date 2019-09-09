@@ -8,7 +8,7 @@ import Helmet from 'react-helmet';
 import getConfig from 'next/config';
 import theme from '../assets/styles/theme';
 import Navbar from '../components/Common/Navbar';
-import { NewsStoreProvider } from '../stores/newsStore';
+import { NewsStoreProvider } from '../stores/rootStore';
 
 const { publicRuntimeConfig } = getConfig();
 

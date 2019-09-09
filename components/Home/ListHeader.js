@@ -2,14 +2,21 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 import styled from 'styled-components';
-import { useNewsStore } from '../../stores/newsStore';
+import { faAlignJustify, faTh } from '@fortawesome/free-solid-svg-icons';
+import { useNewsStore, useUIStore } from '../../stores/rootStore';
 
 import Row from '../Atoms/Row';
 import Column from '../Atoms/Column';
 import FlexBox from '../Atoms/FlexBox';
 import Box from '../Atoms/Box';
 import theme from '../../assets/styles/theme';
-import { NEWS_TYPES_ALL, NEWS_TYPES_HEADLINES } from '../../utilis/constants';
+import {
+  LIST_VIEW_GRID,
+  LIST_VIEW_LIST,
+  NEWS_TYPES_ALL,
+  NEWS_TYPES_HEADLINES,
+} from '../../utilis/constants';
+import Icon from '../Atoms/Icon';
 
 const MiddleLine = styled(Box)`
     height: 1px;
@@ -38,11 +45,15 @@ const messages = defineMessages({
 
 const ListHeader = observer(() => {
   const newsStore = useNewsStore();
+  const uiStore = useUIStore();
   const intl = useIntl();
 
   const handleOnChange = (e) => {
-    console.log(e.target.value);
     newsStore.changeType(e.target.value);
+  };
+
+  const handleClickIcons = (type) => (e) => {
+    uiStore.changeListView(type);
   };
 
   return (
@@ -69,6 +80,14 @@ const ListHeader = observer(() => {
               </option>
             </select>
           </Box>
+          <FlexBox ml={2} alignSelf="stretch">
+            <FlexBox p={1} cursorPointer onClick={handleClickIcons(LIST_VIEW_GRID)}>
+              <Icon icon={faTh} color={uiStore.isGrid ? theme.color.purple : theme.color.black20} />
+            </FlexBox>
+            <FlexBox p={1} cursorPointer onClick={handleClickIcons(LIST_VIEW_LIST)}>
+              <Icon icon={faAlignJustify} color={!uiStore.isGrid ? theme.color.purple : theme.color.black20} />
+            </FlexBox>
+          </FlexBox>
         </FlexBox>
       </Column>
     </Row>

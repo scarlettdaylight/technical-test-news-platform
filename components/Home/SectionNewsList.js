@@ -8,9 +8,11 @@ import Container from '../Atoms/Container';
 import Row from '../Atoms/Row';
 import Column from '../Atoms/Column';
 import NewsCard from '../Common/NewsCard';
-import { useNewsStore } from '../../stores/newsStore';
+import { useNewsStore, useUIStore } from '../../stores/rootStore';
 import SearchingInfo from './SearchingInfo';
 import ListHeader from './ListHeader';
+import NewsCardHorizontal from '../Common/NewsCardHorizontal';
+import Loading from '../Common/Loading';
 
 const InfiniteSectionWrapper = styled(Section)`
     padding-top: 100px;
@@ -22,6 +24,7 @@ const InfiniteSectionWrapper = styled(Section)`
 
 const SectionNewsList = observer(() => {
   const newsStore = useNewsStore();
+  const uiStore = useUIStore();
 
   const handleScroll = (target) => {
     const offset = 1000;
@@ -43,11 +46,19 @@ const SectionNewsList = observer(() => {
         <SearchingInfo />
         <Row multi>
           {newsStore.currentNewsList.map((item, i) => (
-            <Column col="is-6-tablet is-4-desktop" key={i}>
-              <NewsCard {...item} />
+            <Column col={uiStore.isGrid ? 'is-6-tablet is-4-desktop' : 'is-12'} key={i}>
+              {uiStore.isGrid && <NewsCard {...item} /> }
+              {!uiStore.isGrid && <NewsCardHorizontal {...item} /> }
             </Column>
           ))}
         </Row>
+        {newsStore.isFetching && (
+          <Row>
+            <Column py={5}>
+              <Loading />
+            </Column>
+          </Row>
+        )}
       </Container>
     </InfiniteSectionWrapper>
   );

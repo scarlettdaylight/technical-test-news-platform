@@ -2,14 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { FormattedMessage, useIntl, defineMessages } from 'react-intl';
 import debounce from 'lodash/debounce';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import Box from '../Atoms/Box';
 import Paragraph from '../Atoms/Paragraph';
 
 import theme from '../../assets/styles/theme';
-import { useNewsStore } from '../../stores/newsStore';
+import { useNewsStore } from '../../stores/rootStore';
+import Icon from '../Atoms/Icon';
 
 const StyledNavbar = styled.nav`
   background: ${({ theme }) => theme.color.purple};
@@ -61,9 +61,7 @@ const Navbar = () => {
               type="text"
               placeholder={intl.formatMessage(messages.inputPlaceholder)}
             />
-            <span className="icon is-small is-left">
-              <FontAwesomeIcon icon={faSearch} />
-            </span>
+            <Icon icon={faSearch} className="is-left" />
           </p>
         </div>
       </Box>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { FormattedMessage } from 'react-intl';
-import { useNewsStore } from '../../stores/newsStore';
+import { useNewsStore } from '../../stores/rootStore';
 
 import Row from '../Atoms/Row';
 import Column from '../Atoms/Column';

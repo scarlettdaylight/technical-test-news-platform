@@ -5,6 +5,10 @@ const LOCALSTORAGE_NEWSLIST = 'newsPlatform_newsList';
 const NEWS_TYPES_ALL = 'everything';
 const NEWS_TYPES_HEADLINES = 'top-headlines';
 
+// list view type
+const LIST_VIEW_LIST = 'list';
+const LIST_VIEW_GRID = 'grid';
+
 // SOURCES
 const SOURCE_WASHINGTON = 'the-washington-post';
 const SOURCE_NEW_YORK_TIMES = 'the-new-york-times';
@@ -13,7 +17,7 @@ const DEFAULT_SOURCE_LIST = [SOURCE_WASHINGTON, SOURCE_NEW_YORK_TIMES];
 
 // API
 const DEFAULT_ITEM_PER_PAGE = 10;
-const INITIAL_NUMBER_OF_DATA = 20;
+const INITIAL_NUMBER_OF_DATA = 100;
 
 const API_ENDPOINT_NEWS = '/api/getNews';
 const API_ENDPOINT_HEADLINES = '/api/getHeadlines';
@@ -21,6 +25,8 @@ const API_ENDPOINT_HEADLINES = '/api/getHeadlines';
 module.exports = {
   SOURCE_WASHINGTON,
   SOURCE_NEW_YORK_TIMES,
+  LIST_VIEW_LIST,
+  LIST_VIEW_GRID,
   NEWS_TYPES_ALL,
   NEWS_TYPES_HEADLINES,
   DEFAULT_SOURCE_LIST,

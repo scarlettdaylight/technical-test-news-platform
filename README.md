@@ -6,15 +6,18 @@
 - [x] Display 100 news articles from Washington Post and New York Times. :newspaper:
 - [x] Infinite scroll to fetch 10 more news everytime. :cyclone: 
 - [x] Search through fetched news. :mag:
-- [ ] Show loading icons when fetching.
+- [x] Switch between list and grid view. :page_facing_up: 
+- [x] Show loading icons when fetching.
 - [x] Switch between everything to top-headlines only. :top: 
-- [ ] Select your news source or choose from our pre-defined categories! :bookmark_tabs: 
 - [x] Service Workers included :construction_worker: 
 - [x] Basic API include to protect API key. :key:  
 - [x] i18n included. :dancers:   
 
 
 ## How to use
+
+After cloning the project, create ```.env``` file in the root of your project and replace ```apikey``` with your own newsapi API key.
+
 
 #### To run locally:
 ```

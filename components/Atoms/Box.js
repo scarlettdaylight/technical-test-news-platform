@@ -40,19 +40,19 @@ import {
 } from 'styled-system';
 
 const BoxBase = styled.div`
-  ${props => props.cursorPointer
+  ${(props) => props.cursorPointer
     && css`
       cursor: pointer;
     `}
-  ${props => props.overflowHidden
+  ${(props) => props.overflowHidden
     && css`
       overflow: hidden;
     `}
-  ${props => props.posAb
+  ${(props) => props.posAb
     && css`
       position: absolute;
     `}
-  ${props => props.posRe
+  ${(props) => props.posRe
     && css`
       position: relative;
     `}
@@ -100,7 +100,7 @@ const BoxAsLi = BoxBase.withComponent('li');
 const Box = ({ children, as, ...props }) => {
   if (as === 'span') {
     return (
-      <BoxAsSpan display="inline-block" {...props}>
+      <BoxAsSpan {...props}>
         {children}
       </BoxAsSpan>
     );

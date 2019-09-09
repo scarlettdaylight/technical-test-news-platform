@@ -1,10 +1,10 @@
-import React, { createContext, useContext, useEffect } from 'react';
+import React, { createContext, useContext } from 'react';
 import lowerCase from 'lodash/lowerCase';
-import { useStaticRendering, useLocalStore, useAsObservableSource } from 'mobx-react-lite';
+import { useStaticRendering, useLocalStore } from 'mobx-react-lite';
 import { getNews } from '../utilis/newsSource';
 import {
   DEFAULT_ITEM_PER_PAGE,
-  INITIAL_NUMBER_OF_DATA, NEWS_TYPES_ALL,
+  INITIAL_NUMBER_OF_DATA, LIST_VIEW_GRID, NEWS_TYPES_ALL,
 } from '../utilis/constants';
 
 const isServer = typeof window === 'undefined';
@@ -72,7 +72,14 @@ export function createNewsStore() {
 // to test multiple store
 export function createUIStore() {
   return {
+    listView: LIST_VIEW_GRID,
     isMenuOpened: false,
+    changeListView(type) {
+      this.listView = type;
+    },
+    get isGrid() {
+      return this.listView === LIST_VIEW_GRID;
+    },
   };
 }
 
@@ -110,4 +117,13 @@ export const useNewsStore = () => {
     throw new Error('You have forgot to use StoreProvider, shame on you.');
   }
   return store.newsStore;
+};
+
+export const useUIStore = () => {
+  const store = useContext(NewsStoreContext);
+  if (!store) {
+    // this is especially useful in TypeScript so you don't need to be checking for null all the time
+    throw new Error('You have forgot to use StoreProvider, shame on you.');
+  }
+  return store.uiStore;
 };
