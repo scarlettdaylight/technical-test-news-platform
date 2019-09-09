@@ -6,9 +6,6 @@ const withOffline = require('next-offline');
 const Dotenv = require('dotenv-webpack');
 
 const nextConfig = {
-  serverRuntimeConfig: {
-    apiKey: process.env.APIKEY, // Pass through env variables
-  },
   publicRuntimeConfig: {
     meta: {
       title: 'US News',
