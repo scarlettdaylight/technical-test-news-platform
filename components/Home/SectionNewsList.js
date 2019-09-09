@@ -20,6 +20,7 @@ const InfiniteSectionWrapper = styled(Section)`
     width: 100vw;
     height: 100vh;
     overflow: auto;
+    scroll-behavior: smooth;
 `;
 
 const SectionNewsList = observer(() => {
