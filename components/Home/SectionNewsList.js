@@ -15,7 +15,6 @@ import NewsCardHorizontal from '../Common/NewsCardHorizontal';
 import Loading from '../Common/Loading';
 
 const InfiniteSectionWrapper = styled(Section)`
-    padding-top: 100px;
     position: absolute;
     width: 100vw;
     height: 100vh;
@@ -41,6 +40,7 @@ const SectionNewsList = observer(() => {
     <InfiniteSectionWrapper
       id="news-list-wrapper"
       onScroll={({ target }) => throttleOnScroll(target)}
+      pt={[80, 80, 100]}
     >
       <Container fluid>
         <ListHeader />

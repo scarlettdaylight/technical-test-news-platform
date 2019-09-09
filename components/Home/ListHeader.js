@@ -80,7 +80,7 @@ const ListHeader = observer(() => {
               </option>
             </select>
           </Box>
-          <FlexBox ml={2} alignSelf="stretch">
+          <FlexBox ml={2} mt={[2, 0]} width={['100%', 'auto']} alignSelf="stretch" justifyContent="flex-end">
             <FlexBox p={1} cursorPointer onClick={handleClickIcons(LIST_VIEW_GRID)}>
               <Icon icon={faTh} color={uiStore.isGrid ? theme.color.purple : theme.color.black20} />
             </FlexBox>

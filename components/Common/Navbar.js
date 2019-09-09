@@ -12,6 +12,7 @@ import { useNewsStore } from '../../stores/rootStore';
 import Icon from '../Atoms/Icon';
 
 const StyledNavbar = styled.nav`
+  padding: 0 8px;
   background: ${({ theme }) => theme.color.purple};
   color: ${({ theme }) => theme.color.white};
   box-shadow: 0px 3px 6px ${({ theme }) => theme.color.black20};
