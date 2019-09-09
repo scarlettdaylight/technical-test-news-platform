@@ -6,14 +6,6 @@ const withOffline = require('next-offline');
 const Dotenv = require('dotenv-webpack');
 
 const nextConfig = {
-  publicRuntimeConfig: {
-    meta: {
-      title: 'US News',
-      desc: 'A place to show all US news!',
-      url: 'https://example.com', // to be updated
-      image: '/static/apple-touch-icon-1024x1024.png', // to be updated
-    },
-  },
   webpack: (config) => {
     config.plugins = config.plugins || [];
     config.plugins = [

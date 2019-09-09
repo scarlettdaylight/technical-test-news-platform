@@ -1,6 +1,9 @@
 {
   "navbar.search.placeholder": "Search",
   "navbar.logo": "US News",
+  "newsList.header.type.all": "All",
+  "newsList.header.type.headlines": "Top headlines",
+  "newsList.header.title": "Stories",
   "newslist.searchingFor.word": "Searching For: <s>{searchWord}</s>",
   "newslist.searchingFor.result": "Number of Result: <s>{number}<s/>"
 }

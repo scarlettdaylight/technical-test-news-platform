@@ -8,7 +8,7 @@ const defaultMessages = glob.sync('./lang/.messages/**/*.json')
     return readFileSync(filename, 'utf8');
   })
   .map((file) => {
-    console.log(`parsing file : ${file}`);
+    console.log(`parsing file : `);
     return JSON.parse(file);
   })
   .reduce((messages, descriptors) => {

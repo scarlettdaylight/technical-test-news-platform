@@ -8,7 +8,8 @@
   "scripts": {
     "dev": "node server.js",
     "build": "next build && node ./utilis/exportDefaultLang",
-    "start": "yarn build && NODE_ENV=production node server.js"
+    "start": "yarn build && NODE_ENV=production node server.js",
+    "netlify": "netlify-lambda build express"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.10.2",
